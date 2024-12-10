@@ -18,22 +18,24 @@
 # scipy==1.11.112
 
 # Atlas Vector Search with RAG
-langchain
-pymongo
+langchain~=0.3.10
+pymongo~=4.10.1
 bs4
 openai
 tiktoken
-gradio
+gradio~=5.8.0
 requests
 lxml
 argparse
 unstructured
 
 # not listed
-langchain-community
-python-dotenv
+langchain-community~=0.3.10
+python-dotenv~=1.0.1
 
 # The book
-newspaper3k
+newspaper3k~=0.2.8
 lxml_html_clean
 langchain-openai
+
+langchain-core~=0.3.22
