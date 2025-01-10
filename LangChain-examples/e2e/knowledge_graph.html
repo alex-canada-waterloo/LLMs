@@ -1,0 +1,80 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 800px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"id": "Output parsers", "label": "Output parsers", "shape": "ellipse"}, {"id": "transforming LLM outputs to suitable formats", "label": "transforming LLM outputs to suitable formats", "shape": "ellipse"}, {"id": "generating structured data with LLMs", "label": "generating structured data with LLMs", "shape": "ellipse"}, {"id": "LangChain", "label": "LangChain", "shape": "ellipse"}, {"id": "various types of output parsers", "label": "various types of output parsers", "shape": "ellipse"}, {"id": "LangChain OutputParsers", "label": "LangChain OutputParsers", "shape": "ellipse"}, {"id": "streaming", "label": "streaming", "shape": "ellipse"}, {"id": "OpenAITools", "label": "OpenAITools", "shape": "ellipse"}, {"id": "tools to model", "label": "tools to model", "shape": "ellipse"}, {"id": "OpenAIFunctions", "label": "OpenAIFunctions", "shape": "ellipse"}, {"id": "functions to model", "label": "functions to model", "shape": "ellipse"}, {"id": "JSON Output Parser", "label": "JSON Output Parser", "shape": "ellipse"}, {"id": "a JSON object as specified", "label": "a JSON object as specified", "shape": "ellipse"}, {"id": "XML Output Parser", "label": "XML Output Parser", "shape": "ellipse"}, {"id": "a dictionary of tags", "label": "a dictionary of tags", "shape": "ellipse"}, {"id": "CSV Output Parser", "label": "CSV Output Parser", "shape": "ellipse"}, {"id": "a list of comma-separated values", "label": "a list of comma-separated values", "shape": "ellipse"}, {"id": "OutputFixingParser", "label": "OutputFixingParser", "shape": "ellipse"}, {"id": "another output parser", "label": "another output parser", "shape": "ellipse"}, {"id": "an LLM to fix errors", "label": "an LLM to fix errors", "shape": "ellipse"}, {"id": "Pydantic Output Parser", "label": "Pydantic Output Parser", "shape": "ellipse"}, {"id": "data in a user-defined Pydantic model format", "label": "data in a user-defined Pydantic model format", "shape": "ellipse"}, {"id": "YAML Output Parser", "label": "YAML Output Parser", "shape": "ellipse"}, {"id": "data in a user-defined Pydantic model format using YAML", "label": "data in a user-defined Pydantic model format using YAML", "shape": "ellipse"}, {"id": "PandasDataFrame Output Parser", "label": "PandasDataFrame Output Parser", "shape": "ellipse"}, {"id": "operations with pandas DataFrames", "label": "operations with pandas DataFrames", "shape": "ellipse"}, {"id": "Enum Output Parser", "label": "Enum Output Parser", "shape": "ellipse"}, {"id": "one of the provided enum values", "label": "one of the provided enum values", "shape": "ellipse"}, {"id": "Datetime Output Parser", "label": "Datetime Output Parser", "shape": "ellipse"}, {"id": "a datetime string", "label": "a datetime string", "shape": "ellipse"}, {"id": "Structured Output Parser", "label": "Structured Output Parser", "shape": "ellipse"}, {"id": "structured information", "label": "structured information", "shape": "ellipse"}, {"id": "working with smaller LLMs", "label": "working with smaller LLMs", "shape": "ellipse"}]);
+        edges = new vis.DataSet([{"arrows": "to", "from": "Output parsers", "title": "are responsible for", "to": "transforming LLM outputs to suitable formats"}, {"arrows": "to", "from": "Output parsers", "title": "are useful for", "to": "generating structured data with LLMs"}, {"arrows": "to", "from": "LangChain", "title": "offers", "to": "various types of output parsers"}, {"arrows": "to", "from": "LangChain OutputParsers", "title": "support", "to": "streaming"}, {"arrows": "to", "from": "OpenAITools", "title": "pass", "to": "tools to model"}, {"arrows": "to", "from": "OpenAIFunctions", "title": "pass", "to": "functions to model"}, {"arrows": "to", "from": "JSON Output Parser", "title": "returns", "to": "a JSON object as specified"}, {"arrows": "to", "from": "XML Output Parser", "title": "returns", "to": "a dictionary of tags"}, {"arrows": "to", "from": "CSV Output Parser", "title": "returns", "to": "a list of comma-separated values"}, {"arrows": "to", "from": "OutputFixingParser", "title": "wraps", "to": "another output parser"}, {"arrows": "to", "from": "OutputFixingParser", "title": "calls", "to": "an LLM to fix errors"}, {"arrows": "to", "from": "Pydantic Output Parser", "title": "returns", "to": "data in a user-defined Pydantic model format"}, {"arrows": "to", "from": "YAML Output Parser", "title": "returns", "to": "data in a user-defined Pydantic model format using YAML"}, {"arrows": "to", "from": "PandasDataFrame Output Parser", "title": "is useful for", "to": "operations with pandas DataFrames"}, {"arrows": "to", "from": "Enum Output Parser", "title": "parses response into", "to": "one of the provided enum values"}, {"arrows": "to", "from": "Datetime Output Parser", "title": "parses response into", "to": "a datetime string"}, {"arrows": "to", "from": "Structured Output Parser", "title": "returns", "to": "structured information"}, {"arrows": "to", "from": "Structured Output Parser", "title": "is useful when", "to": "working with smaller LLMs"}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {"nodes": {"font": {"size": 16}, "shape": "dot", "size": 20}, "edges": {"arrows": {"to": {"enabled": true}}, "smooth": {"enabled": true, "type": "dynamic"}}};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

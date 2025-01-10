@@ -2,21 +2,27 @@ from newspaper import Article
 from langchain.schema import HumanMessage
 from langchain_openai import ChatOpenAI
 
+
 def fetch_article(url):
     article = Article(url)
     article.download()
     article.parse()
     return article
 
+
 def prepare_prompt(article):
-    template = f"Summarize the following article: {article.title}\n\n{article.text}\n\nrespond in 100 tokens or less."
+    template = (f"""Summarize the following article: {article.title}\n\n{article.text}
+                format: bullet list
+                respond in 100 tokens or less.""")
     return template.format(article_title=article.title, article_text=article.text)
+
 
 def generate_summary(prompt):
     messages = [HumanMessage(content=prompt, max_tokens=300)]
-    chat = ChatOpenAI(model_name="gpt-4o-mini", temperature=0.5, max_tokens=100)
+    chat = ChatOpenAI(model_name="gpt-4o-mini", temperature=0.5, max_tokens=100, verbose=True)
     summary = chat.invoke(messages)
     return summary
+
 
 def print_summary(summary):
     print("Summary:")
